@@ -54,7 +54,7 @@ public:
 
 	virtual void print()
 	{
-		cout << "_: " << relate->name << " "; // << type << endl;
+		cout << "_: " << relate->name << " ";
 	}
 };
 
@@ -292,8 +292,8 @@ class assignment_node : public node
 {
 public:
 
-	node* left_op;
-	node* right_op;
+	int left_op;
+	int right_op;
 
 	assignment_node(node* original)
 	{
@@ -306,13 +306,13 @@ public:
 	void print() override
 	{
 		cout << "_assignment: ";
-		left_op->print(); cout << " = "; right_op->print(); cout << endl;
+		cout << "id table  idx " << left_op << "  right_op idx " << right_op << endl;
 	}
 
-	void form(node* def_ptr)
+	void form(int _l, int _r)
 	{
-		left_op = def_ptr->sons[0];
-		right_op = def_ptr->sons[1];
+		left_op = _l;
+		right_op = _r;
 	}
 
 };
@@ -344,6 +344,7 @@ public:
 
 	void setType(string _type)
 	{
+		
 		if (_type == "integer")
 		{
 			type = _int;
@@ -388,14 +389,24 @@ public:
 			if (table[i]->name == str)
 				return get(i);
 		}
+		return nullptr;
 	}
 
+
+	int getId(string str)
+	{
+		for (int i = 0; i < table.size(); i++)
+		{
+			if (table[i]->name == str)
+				return i;
+		}
+		return -1;
+	}
 	void print()
 	{
 		for (int i = 0; i < table.size(); i++)
 		{
-			table[i]->print();
-				
+			table[i]->print();		
 		}
 	}
 
@@ -403,23 +414,24 @@ public:
 
 
 
-class main_node : public node
-{
+class root_node:public node {
+
 public:
 
 	std::vector<node*> instructions;
-
-	main_node(node* original)
+	
+	root_node(node* original)
 	{
 		this->parent = original->parent;
 		this->relate = original->relate;
 		idx_in_parent = original->idx_in_parent;
-		type = _main;
+		type = _root;
 	}
+
 
 	void print() override
 	{
-		cout << "_main: \n";
+		cout << "_root body:" << endl;
 		for (int i = 0; i < instructions.size(); i++)
 		{
 			cout << "\t N" << i << " "; instructions[i]->print(); // << endl;
@@ -433,34 +445,6 @@ public:
 			instructions.push_back(root->sons[i]);
 		}
 	}
-
-};
-
-class root_node:public node {
-
-public:
-	main_node* body;
-	
-	
-	root_node(node* original)
-	{
-		this->parent = original->parent;
-		this->relate = original->relate;
-		idx_in_parent = original->idx_in_parent;
-		type = _root;
-	}
-
-	void print() override
-	{
-		cout << "_root body:" << endl;
-		body->print();
-	}
-
-	void form(main_node* _body)
-	{
-		body = _body;
-	}
-
 
 };
 
@@ -514,7 +498,7 @@ public:
 				}
 
 				root_node* new_root = new root_node(ptr);
-				new_root->form((main_node*)ptr->sons[0]);
+				new_root->form(ptr->sons[0]);
 				root = new_root;
 				root->print();
 
@@ -596,33 +580,33 @@ public:
 				definition_node* add_new = new definition_node(ptr);
 				add_new->form(ptr);
 				ptr = add_new;
-
+				//ptr->print();
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
 
-				//
-				//std::vector<node*>::iterator it = parent->sons.begin();
-				//
-				//for (int i = 0; i < parent->sons.size(); i++)
-				//{
-				//	parent->sons[i]->print();
-				//	cout << "idx " << parent->sons[i]->idx_in_parent << endl;
-				//}
-				//printf("\n");
-				//for (int i = 0; i < ptr->idx_in_parent; i++)
-				//{
-				//	it++;
-				//	
-				//}
-				//parent->sons.erase(it);
-				//printf("\n");
-				//for (int i = 0; i < parent->sons.size(); i++)
-				//{
-				//	//parent->sons[i]->idx_in_parent--;
-				//	parent->sons[i]->print();
-				//	cout << "idx " << parent->sons[i]->idx_in_parent << endl;
-				//}
+				
+				/*std::vector<node*>::iterator it = parent->sons.begin();
+				
+				for (int i = 0; i < parent->sons.size(); i++)
+				{
+					parent->sons[i]->print();
+					cout << "idx " << parent->sons[i]->idx_in_parent << endl;
+				}
+				printf("\n");
+				for (int i = 0; i < ptr->idx_in_parent; i++)
+				{
+					it++;	
+				}
 
+				parent->sons.erase(it);
+				printf("\n");
+				for (int i = 0; i < parent->sons.size(); i++)
+				{
+					parent->sons[i]->idx_in_parent--;
+					parent->sons[i]->print();
+					cout << "idx " << parent->sons[i]->idx_in_parent << endl;
+				}
+				print_tree();*/
 				return;
 			}
 
@@ -631,11 +615,15 @@ public:
 				cout << "\nASSIGNMENT MET:: " << endl;
 
 				assignment_node* add_node = new assignment_node(ptr);
-				add_node->form(ptr);
+
+				idTable.print();
+
+				int id_left = idTable.getId(ptr->sons[0]->relate->name);
+				int id_right = idTable.getId(ptr->sons[0]->relate->name);
+				add_node->form(id_left, id_right);
 				ptr = (node*)add_node;
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
-
 				return;
 			}
 
@@ -643,12 +631,11 @@ public:
 			{
 				cout << "\nPROGRAM MET:: " << endl;
 
-				main_node* add_node = new main_node(ptr);
+				root_node* add_node = new root_node(ptr);
 				add_node->form(ptr);
 				ptr = (node*)add_node;
 				node* parent = ptr->parent;
-				parent->sons[ptr->idx_in_parent] = ptr;
-
+				parent = ptr;
 
 				return;
 			}
@@ -665,7 +652,6 @@ public:
 				ptr->print();
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
-
 
 				return;
 			}
@@ -684,8 +670,6 @@ public:
 class func_procl
 {
 public:
-
-	identifiersTable* table;
 
 	int return_type;
 	string name;
@@ -719,11 +703,14 @@ public:
 		identifier* new_arg = new identifier;
 		new_arg->setType(_procl->sons[2]->sons[0]->sons[0]->relate->name);
 		new_arg->setName(_procl->sons[2]->sons[0]->sons[1]->relate->name);
-
+		
 		arg = new_arg;
 		body = new reformable_tree;
+		
+		body->idTable.add(new_arg);
 		body->root = (root_node*)_procl->sons[3];
 		form_body();
+
 	}
 	
 	void form_body()
