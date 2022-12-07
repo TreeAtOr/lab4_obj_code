@@ -4,8 +4,9 @@
 #include <iostream>
 #include "tree.h"
 
-enum node_types
+typedef enum node_types_t
 {
+	__invalid,
 	_basic = 1,
 	_operand,
 	_root,
@@ -17,10 +18,11 @@ enum node_types
 	_definition,
 	_while,
 	_func_procl
-};
+} node_type;
 
 enum compar_types
 {
+
 	_eq = 1,
 	_not_eq,
 	_more, _more_eq,
@@ -35,7 +37,7 @@ enum sign_types
 class node
 {
 public:
-	int type;
+	node_type type;
 	node* parent;
 	int idx_in_parent;
 
@@ -45,7 +47,7 @@ public:
 
 	node()
 	{
-		type = _basic;
+		type =_basic;
 		relate = nullptr;
 	}
 
@@ -364,6 +366,7 @@ public:
 
 	void print() override
 	{
+		cout << "type : " << type << endl;
 		cout << "_expression: sign(" << sign_type << ") ";
 		left_op->print(); cout << " "; right_op->print(); cout << endl;
 	}
@@ -923,23 +926,24 @@ public:
 			if (name == "expr")
 			{
 				cout << "\nEXPRESSION MET:: " << endl;
-
-				expression_node* add_node = new expression_node(ptr);
 				node* sign = ptr->sons[0];
+				expression_node* add_node = new expression_node(sign);
+				
 				cout << ptr->sons[0]->sons[0]->type << endl;
 				cout << ptr->sons[0]->sons[1]->type << endl;
 				cout << ptr->sons[0]->type << endl;
 
 				int id = idTable.getId(ptr->sons[0]->sons[0]->relate->name);
 				uniq_id id_left(id);
-
+				cout << ptr->sons[0]->sons[0]->type << endl;
+				cout << ptr->sons[0]->sons[0]->relate->name << endl;
 				if (id != -1)
 					id_left.setType(_identificator);
 				else
 				{
 					id_left.setType(_const);
-					cout << ptr->sons[0]->sons[0]->type << endl;
-					cout << ptr->sons[0]->sons[0]->relate->name << endl;
+					/*cout << ptr->sons[0]->sons[0]->type << endl;
+					cout << ptr->sons[0]->sons[0]->relate->name << endl;*/
 					if (ptr->sons[0]->sons[0]->sons.size() != 0)
 					{
 						cout << "childs: " << endl;
@@ -951,14 +955,14 @@ public:
 
 				id = idTable.getId(ptr->sons[0]->sons[1]->relate->name);
 				uniq_id id_right(id);
-				
+				cout << ptr->sons[0]->sons[1]->type << endl;
+				cout << ptr->sons[0]->sons[1]->relate->name << endl;
 				if (id != -1)
 					id_right.setType(_identificator);
 				else
 				{
 					id_right.setType(_const);
-					cout << ptr->sons[0]->sons[1]->type << endl;
-					cout << ptr->sons[0]->sons[1]->relate->name << endl;
+					
 					if (ptr->sons[0]->sons[1]->sons.size() != 0)
 					{
 						cout << "childs: " << endl;
@@ -981,9 +985,9 @@ public:
 			return;
 		}
 
-		for (int i = 0; i != ptr->sons.size(); i++)
+		for (int i = ptr->sons.size(); i > 0; i--)
 		{
-			reform_layer(ptr->sons[i], depth + 1, layer);
+			reform_layer(ptr->sons[i-1], depth + 1, layer);
 		}
 	}
 };
