@@ -1,0 +1,15 @@
+main
+integer
+string
+bool
+if
+then
+do
+while
+endwhile
+else
+endif
+proc
+return
+true
+false
