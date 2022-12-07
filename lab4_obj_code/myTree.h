@@ -7,6 +7,7 @@
 enum node_types
 {
 	_basic,
+	_operand,
 	_root,
 	_if,
 	_function_call,
@@ -14,11 +15,8 @@ enum node_types
 	_expression,
 	_condition,
 	_definition,
-
 	_while,
-	_func_procl,
-	//_dowhile,
-	_main
+	_func_procl
 };
 
 enum compar_types
@@ -28,7 +26,6 @@ enum compar_types
 	_more, _more_eq,
 	_less, _less_eq
 };
-
 
 enum sign_types
 {
@@ -58,17 +55,147 @@ public:
 	}
 };
 
+enum id_types
+{
+	_identificator,
+	_const
+};
+
+class uniq_id
+{
+	int type;
+	int idx;
+public:
+	
+	uniq_id()
+	{
+
+	}
+	uniq_id( int i) : idx(i)
+	{
+	};
+	void setIdx(int id)
+	{
+		idx = id;
+	}
+	void setType(int t)
+	{
+		type = t;
+	}
+
+	int getType()
+	{
+		return type;
+	}
+	int getIdx()
+	{
+		return idx;
+	}
+	void print()
+	{
+		if (type == _identificator)
+			cout << "identificator: ";
+		else
+			cout << "conts: ";
+		cout << idx << endl;
+	}
+};
+
+
+enum operand_types
+{
+	_none,
+	_id,
+	_node
+};
+
+class operand: public node
+{
+	public:
+	operand()
+	{
+
+	}
+	operand(node* original)
+	{
+		this->parent = original->parent;
+		this->relate = original->relate;
+		idx_in_parent = original->idx_in_parent;
+		type = _operand;
+	}
+	virtual int op_type()
+	{
+		return _none;
+	}
+	virtual void print()
+	{
+		
+	}
+};
+
+class operand_node : public operand
+{
+public:
+
+	node* value;
+	operand_node()
+	{
+
+	}
+	operand_node(node* original)
+	{
+		this->parent = original->parent;
+		this->relate = original->relate;
+		idx_in_parent = original->idx_in_parent;
+		type = _operand;
+	}
+
+	int op_type() override
+	{
+		return _node;
+	}
+	void print() override
+	{
+		value->print();
+	}
+
+};
+
+class operand_id : public operand
+{
+public:
+
+	uniq_id value;
+	operand_id(node* original)
+	{
+		this->parent = original->parent;
+		this->relate = original->relate;
+		idx_in_parent = original->idx_in_parent;
+		type = _operand;
+	}
+	int op_type() override
+	{
+		return _id;
+	}
+	void form(uniq_id id)
+	{
+		value = id;
+	}
+
+	void print() override
+	{
+		value.print();
+	}
+
+};
 
 
 class condition_node : public node
 {
 public:
 	int comparator;
-	node* op1;
-	node* op2;
-
-	string name;
-
+	uniq_id left_op;
+	uniq_id right_op;
 
 	condition_node(node* original)
 	{
@@ -82,10 +209,11 @@ public:
 	void print() override
 	{
 		cout << "_condition: type(" << comparator << ") ";
-		op1->print(); cout << " "; op2->print(); cout << endl;
+		left_op.print(); cout << " "; 		
+		right_op.print(); cout << endl;
 	}
 
-	void form(string comp, node* _op1, node* _op2)
+	void form(string comp, uniq_id _op1, uniq_id _op2)
 	{
 		if (comp == "==")
 			comparator = _eq;
@@ -100,12 +228,11 @@ public:
 		if (comp == "<=")
 			comparator = _less_eq;
 
-		op1 = _op1;
-		op2 = _op2;
+		left_op = _op1;
+		right_op = _op2;
 
 	}
 };
-
 
 class  if_node : public node
 {
@@ -223,10 +350,10 @@ public:
 class expression_node : public node
 {
 public:
-	int sign;
-	node* left_op;
-	node* right_op;
+	int sign_type;
 
+	operand* left_op;
+	operand* right_op;
 	expression_node(node* original)
 	{
 		this->parent = original->parent;
@@ -237,28 +364,26 @@ public:
 
 	void print() override
 	{
-		cout << "_expression: sign(" << sign << ") ";
+		cout << "_expression: sign(" << sign_type << ") ";
 		left_op->print(); cout << " "; right_op->print(); cout << endl;
 	}
 
-	void form(node* sign_ptr)
+	void form(string sign_ptr, operand* _op1, operand* _op2)
 	{
-		if (sign_ptr->relate->name == "+")
-			sign = _plus;
-		if (sign_ptr->relate->name == "-")
-			sign = _minus;
-		if (sign_ptr->relate->name == "*")
-			sign = _mul;
-		if (sign_ptr->relate->name == "/")
-			sign = _div;
+		if (sign_ptr == "+")
+			sign_type = _plus;
+		if (sign_ptr == "-")
+			sign_type = _minus;
+		if (sign_ptr == "*")
+			sign_type = _mul;
+		if (sign_ptr == "/")
+			sign_type = _div;
 
-		left_op = sign_ptr->sons[0];
-		right_op = sign_ptr->sons[1];
-
+		left_op = _op1;
+		right_op = _op2;
 	}
 
 };
-
 
 class definition_node : public node
 {
@@ -292,8 +417,8 @@ class assignment_node : public node
 {
 public:
 
-	int left_op;
-	int right_op;
+	uniq_id left_op;
+	uniq_id right_op;
 
 	assignment_node(node* original)
 	{
@@ -306,10 +431,11 @@ public:
 	void print() override
 	{
 		cout << "_assignment: ";
-		cout << "id table  idx " << left_op << "  right_op idx " << right_op << endl;
-	}
+		left_op.print();
+		right_op.print();
+		}
 
-	void form(int _l, int _r)
+	void form(uniq_id _l, uniq_id _r)
 	{
 		left_op = _l;
 		right_op = _r;
@@ -317,6 +443,39 @@ public:
 
 };
 
+class root_node:public node {
+
+public:
+
+	std::vector<node*> instructions;
+	
+	root_node(node* original)
+	{
+		this->parent = original->parent;
+		this->relate = original->relate;
+		idx_in_parent = original->idx_in_parent;
+		type = _root;
+	}
+
+
+	void print() override
+	{
+		cout << "_root body:" << endl;
+		for (int i = 0; i < instructions.size(); i++)
+		{
+			cout << "\t N" << i << " "; instructions[i]->print(); // << endl;
+		}
+	}
+
+	void form(node* root)
+	{
+		for (int i = 0; i < root->sons.size(); i++)
+		{
+			instructions.push_back(root->sons[i]);
+		}
+	}
+
+};
 
 
 
@@ -413,40 +572,94 @@ public:
 };
 
 
+enum const_types
+{
+	_c_none,
+	_c_int,
+	_c_str
+};
 
-class root_node:public node {
-
-public:
-
-	std::vector<node*> instructions;
-	
-	root_node(node* original)
+class const_base
+{
+	public:
+	virtual int type()
 	{
-		this->parent = original->parent;
-		this->relate = original->relate;
-		idx_in_parent = original->idx_in_parent;
-		type = _root;
+		return _c_none;
 	}
+	virtual void print()
+	 {}
+};
 
-
+class const_int : public const_base
+{
+public:
+	int type() override
+	{
+		return _c_int;
+	}
 	void print() override
 	{
-		cout << "_root body:" << endl;
-		for (int i = 0; i < instructions.size(); i++)
-		{
-			cout << "\t N" << i << " "; instructions[i]->print(); // << endl;
-		}
+		cout << "int " << value;
 	}
 
-	void form(node* root)
+	int value;
+
+	const_int(int v) : value(v)
 	{
-		for (int i = 0; i < root->sons.size(); i++)
-		{
-			instructions.push_back(root->sons[i]);
-		}
+
+	}
+};
+
+class const_str : public const_base
+{
+public:
+	int type() override
+	{
+		return _c_str;
+	}
+	void print() override
+	{
+		cout << "str "<< value;
 	}
 
+	string value;
+
+	const_str(string v) : value(v)
+	{
+
+	}
 };
+
+
+class constantsTable
+{
+public:
+	vector<const_base*> table;
+
+	int add(const_base* elem)
+	{
+		table.push_back(elem);
+		return table.size() - 1;
+	}
+
+	const_base* get(int i)
+	{
+		return table[i];
+	}
+
+
+	void print()
+	{
+		cout << "const table" << endl;
+		for (int i = 0; i < table.size(); i++)
+		{
+			cout << i << " ";
+			table[i]->print();
+			cout << endl;
+		}
+	}
+};
+
 
 
 class reformable_tree
@@ -454,6 +667,8 @@ class reformable_tree
 public: 
 	root_node* root;
 	identifiersTable idTable;
+	constantsTable conTable;
+
 	int max_depth;
 	void print_tree()
 	{
@@ -475,6 +690,65 @@ public:
 		{
 			print(ptr->sons[i], depth + 1);
 		}
+	}
+
+
+	void form_idTable()
+	{
+		for (int i = max_depth; i >= 0; i--)
+		{
+			check_layer_for_definition(root, 0, i);
+		}
+	}
+
+	int check_layer_for_definition(node* ptr, int depth, int layer)
+	{
+		if (ptr == nullptr)
+			return 0;
+
+		if (depth == layer)
+		{
+
+			string name = ptr->relate->name;
+
+			if (name == "definition")
+			{
+				cout << "\nDEFINITION MET:: " << endl;
+				identifier* newId = new identifier;
+				newId->setType(ptr->sons[0]->relate->name);
+				newId->setName(ptr->sons[1]->relate->name);
+
+				idTable.add(newId);
+
+				int id = ptr->idx_in_parent;
+				ptr = ptr->parent;
+
+				std::vector<node*>::iterator it = ptr->sons.begin();
+			
+				for (int i = 0; i < id; i++)
+					it++;
+			
+				for (int i = id; i < ptr->sons.size(); i++)
+					ptr->sons[i]->idx_in_parent -= 1;
+			
+
+				cout << ptr->sons.size() << "  " << endl;
+				ptr->sons.erase(it);
+				
+				return 1;
+			}
+
+			return 0;
+		}
+
+		for (int i = 0; i != ptr->sons.size(); )
+		{
+			if (check_layer_for_definition(ptr->sons[i], depth + 1, layer) == 0)
+				i++;
+		}
+
+		return 0;
+
 	}
 
 	void reform_layer(node* ptr, int depth, int layer)
@@ -505,30 +779,31 @@ public:
 				return;
 			}
 
-			if (name == "expr")
-			{
-				cout << "\nEXPRESSION MET:: " << endl;
-
-				expression_node* add_node = new expression_node(ptr);
-
-				add_node->form(ptr->sons[0]);
-
-				ptr = (node*)add_node;
-
-				node* parent = ptr->parent;
-				parent->sons[ptr->idx_in_parent] = ptr;
-
-				return;
-			}
-
+			
 			if (name == "cond")
 			{
 				cout << "\nCONDITION MET" << endl;
 
 				node* sign = ptr->sons[0];
+
 				condition_node* add_new = new condition_node(ptr);
 
-				add_new->form(sign->relate->name, sign->sons[0], sign->sons[1]);
+				int id = idTable.getId(sign->sons[0]->relate->name);
+				uniq_id id_left(id);
+				if (id != -1)
+					id_left.setType(_identificator);
+				else
+					id_left.setType(_const);
+
+				id = idTable.getId(sign->sons[1]->relate->name);
+				uniq_id id_right(id);
+				if (id != -1)
+					id_right.setType(_identificator);
+				else
+					id_right.setType(_const);
+
+
+				add_new->form(sign->relate->name, id_left, id_right);
 				ptr = add_new;
 
 				node* parent = ptr->parent;
@@ -568,47 +843,6 @@ public:
 				return;
 			}
 
-			if (name == "definition")
-			{
-				cout << "\nDEFINITION MET:: " << endl;
-				identifier* newId = new identifier;
-				newId->setType(ptr->sons[0]->relate->name);
-				newId->setName(ptr->sons[1]->relate->name);
-
-				idTable.add(newId);
-
-				definition_node* add_new = new definition_node(ptr);
-				add_new->form(ptr);
-				ptr = add_new;
-				//ptr->print();
-				node* parent = ptr->parent;
-				parent->sons[ptr->idx_in_parent] = ptr;
-
-				
-				/*std::vector<node*>::iterator it = parent->sons.begin();
-				
-				for (int i = 0; i < parent->sons.size(); i++)
-				{
-					parent->sons[i]->print();
-					cout << "idx " << parent->sons[i]->idx_in_parent << endl;
-				}
-				printf("\n");
-				for (int i = 0; i < ptr->idx_in_parent; i++)
-				{
-					it++;	
-				}
-
-				parent->sons.erase(it);
-				printf("\n");
-				for (int i = 0; i < parent->sons.size(); i++)
-				{
-					parent->sons[i]->idx_in_parent--;
-					parent->sons[i]->print();
-					cout << "idx " << parent->sons[i]->idx_in_parent << endl;
-				}
-				print_tree();*/
-				return;
-			}
 
 			if (name == "assignment")
 			{
@@ -616,10 +850,22 @@ public:
 
 				assignment_node* add_node = new assignment_node(ptr);
 
-				idTable.print();
+				//idTable.print();
+				int id = idTable.getId(ptr->sons[0]->relate->name);
+				uniq_id id_left(id);
+				if (id != -1)
+					id_left.setType(_identificator);
+				else
+					id_left.setType(_const);
 
-				int id_left = idTable.getId(ptr->sons[0]->relate->name);
-				int id_right = idTable.getId(ptr->sons[0]->relate->name);
+				id = idTable.getId(ptr->sons[1]->relate->name);
+				uniq_id id_right(id);
+				if (id != -1)
+					id_right.setType(_identificator);
+				else
+					id_right.setType(_const);
+
+
 				add_node->form(id_left, id_right);
 				ptr = (node*)add_node;
 				node* parent = ptr->parent;
@@ -655,6 +901,147 @@ public:
 
 				return;
 			}
+			
+			if (name == "expr")
+			{
+				cout << "\nEXPRESSION MET:: " << endl;
+
+				expression_node* add_node = new expression_node(ptr);
+
+				cout << ptr->sons[0]->sons[0]->type << endl;
+				cout << ptr->sons[0]->sons[1]->type << endl;
+				cout << ptr->sons[0]->type << endl;
+
+				int id = idTable.getId(ptr->sons[0]->sons[0]->relate->name);
+				uniq_id id_left(id);
+				bool caught = false;
+				if (id != -1)
+					id_left.setType(_identificator);
+				//else
+				//{
+				//	string const_name = ptr->sons[0]->sons[0]->relate->name;
+				//	id_left.setType(_const);
+				//	int const_int_attempt;
+				//	try {
+				//		const_int_attempt = stoi(const_name);
+				//	}
+				//	catch (...)
+				//	{
+				//		// it is a string
+				//		const_str* add_const_str = new const_str(const_name);
+				//		int idx = conTable.add(add_const_str);
+				//		id_left.setIdx(idx);
+				//		caught = true;
+				//	}
+				//	if (!caught)
+				//	{
+				//		// its a number
+				//		const_int* add_const_int = new const_int(const_int_attempt);
+				//		int idx = conTable.add(add_const_int);
+				//		id_left.setIdx(idx);
+				//	}
+				//}
+				//
+				caught = false;
+				id = idTable.getId(ptr->sons[0]->sons[1]->relate->name);
+				uniq_id id_right(id);
+
+				if (id != -1)
+					id_right.setType(_identificator);
+				//else
+				//{
+				//	string const_name = ptr->sons[0]->sons[1]->relate->name;
+				//	cout << ptr->sons[0]->sons[1]->type << endl;
+				//	cout << ptr->sons[0]->type << endl;
+				//	id_right.setType(_const);
+				//	int const_int_attempt;
+				//	try {
+				//		 const_int_attempt = stoi(const_name);
+				//	}
+				//	catch(...)
+				//	{
+				//		// it is a string
+				//		const_str* add_const_str = new const_str(const_name);
+				//		int idx = conTable.add(add_const_str);
+				//		id_right.setIdx(idx);
+				//		caught = true;
+				//	}
+				//	if (!caught)
+				//	{
+				//		// its a number
+				//		const_int* add_const_int = new const_int(const_int_attempt);
+				//		int idx = conTable.add(add_const_int);
+				//		id_right.setIdx(idx);
+				//	}
+				//}
+
+
+				//add_node->form(ptr->sons[0]->relate->name, id_left, id_right);
+				ptr = (node*)add_node;
+
+				node* parent = ptr->parent;
+				parent->sons[ptr->idx_in_parent] = ptr;
+
+				return;
+			}
+
+			// if none met, its a leaf, meaning operand
+			
+			
+			cout << ptr->relate->name << endl;
+			int id = idTable.getId(ptr->relate->name);
+
+			if (id == -1) // not in iDtable, not an identificator
+			{
+				// is a constanta
+				// a number or a string
+
+				cout << ptr->type << endl;
+				string const_name = ptr->relate->name;
+				int const_int_attempt;
+				uniq_id const_uniq_idx;
+				int conTable_idx;
+				bool caught = false;
+					try {
+						 const_int_attempt = stoi(const_name);
+					}
+					catch(...)
+					{
+						// it is a string
+						
+						const_str* add_const_str = new const_str(const_name);
+						conTable_idx = conTable.add(add_const_str);
+
+						const_uniq_idx.setIdx(conTable_idx);
+						const_uniq_idx.setType(_c_str);
+						
+						caught = true;
+					}
+					if (!caught)
+					{
+						// its a number
+
+						const_int* add_const_int = new const_int(const_int_attempt);
+						conTable_idx = conTable.add(add_const_int);
+
+						const_uniq_idx.setIdx(conTable_idx);
+						const_uniq_idx.setType(_c_int);
+					}
+
+					operand_id* add_op = new operand_id(ptr);
+					add_op->form(conTable_idx);
+					ptr = add_op;
+					node* parent = ptr->parent;
+					parent->sons[ptr->idx_in_parent] = add_op;
+
+			}
+			else
+			{
+				operand_id* add_op = new operand_id(ptr);
+				ptr = add_op;
+				node* parent = ptr->parent;
+				parent->sons[ptr->idx_in_parent] = add_op;
+			}
 
 
 			return;
@@ -673,7 +1060,7 @@ public:
 
 	int return_type;
 	string name;
-	identifier* arg; // int id
+	int arg_idx;
 	reformable_tree* body;
 	identifier* return_value; // int id
 
@@ -704,10 +1091,13 @@ public:
 		new_arg->setType(_procl->sons[2]->sons[0]->sons[0]->relate->name);
 		new_arg->setName(_procl->sons[2]->sons[0]->sons[1]->relate->name);
 		
-		arg = new_arg;
+		
 		body = new reformable_tree;
 		
 		body->idTable.add(new_arg);
+		
+		
+		arg_idx = 0;
 		body->root = (root_node*)_procl->sons[3];
 		form_body();
 
@@ -716,6 +1106,7 @@ public:
 	void form_body()
 	{
 		find_max_depth(body->root, 0);
+		body->form_idTable();
 		for (int i = body->max_depth; i >= 0; i--)
 		{
 			printf("\t\t%d\n", i);
@@ -736,9 +1127,10 @@ public:
 
 	void print()
 	{
-		cout << return_type << " " << name; arg->print();
+		cout << return_type << " " << name;
 		body->print_tree();
 		body->idTable.print();
+		body->conTable.print();
 	}
 };
 
@@ -782,6 +1174,7 @@ public:
 
 	void form_all_functions()
 	{
+		
 		for (int i = 1; i < root->sons.size(); i++)
 		{
 			printf("\t\t%d\n", i);
@@ -822,16 +1215,18 @@ public:
 	void form_new_tree()
 	{
 		form_all_functions();
+		form_idTable();
 
 		for (int i = max_depth; i >= 0; i--)
 		{
 			printf("\t\t%d\n", i);
 			reform_layer(root, 0, i);
+			print(root, 0);
 		}
 		printf("\n\nfinal\n");
 		print(root, 0);
 		idTable.print();
-
+		conTable.print();
 		for (int i = 0; i < functions.size(); i++)
 		{
 			functions[i]->print();
@@ -859,7 +1254,6 @@ public:
 		{
 			std::cout << " node ";
 			if (ptr->parent != nullptr)
-				//cout << ptr->relate->name << "\n\tparent: " << ptr->parent->relate->name << endl;
 				ptr->print();
 			else
 				cout << ptr->relate->name << "\n\tparent: nullptr" << endl;
