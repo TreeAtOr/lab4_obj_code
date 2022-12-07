@@ -6,7 +6,7 @@
 
 enum node_types
 {
-	_basic,
+	_basic = 1,
 	_operand,
 	_root,
 	_if,
@@ -21,7 +21,7 @@ enum node_types
 
 enum compar_types
 {
-	_eq,
+	_eq = 1,
 	_not_eq,
 	_more, _more_eq,
 	_less, _less_eq
@@ -29,7 +29,7 @@ enum compar_types
 
 enum sign_types
 {
-	_mul, _div, _plus, _minus
+	_mul = 1, _div, _plus, _minus
 };
 
 class node
@@ -57,7 +57,7 @@ public:
 
 enum id_types
 {
-	_identificator,
+	_identificator = 1,
 	_const
 };
 
@@ -104,7 +104,7 @@ public:
 
 enum operand_types
 {
-	_none,
+	_none = 1,
 	_id,
 	_node
 };
@@ -352,8 +352,8 @@ class expression_node : public node
 public:
 	int sign_type;
 
-	operand* left_op;
-	operand* right_op;
+	uniq_id* left_op;
+	uniq_id* right_op;
 	expression_node(node* original)
 	{
 		this->parent = original->parent;
@@ -368,7 +368,7 @@ public:
 		left_op->print(); cout << " "; right_op->print(); cout << endl;
 	}
 
-	void form(string sign_ptr, operand* _op1, operand* _op2)
+	void form(string sign_ptr, uniq_id* _op1, uniq_id* _op2)
 	{
 		if (sign_ptr == "+")
 			sign_type = _plus;
@@ -574,7 +574,7 @@ public:
 
 enum const_types
 {
-	_c_none,
+	_c_none = 1,
 	_c_int,
 	_c_str
 };
@@ -639,7 +639,7 @@ public:
 	int add(const_base* elem)
 	{
 		table.push_back(elem);
-		return table.size() - 1;
+		return ((int)table.size() - 1);
 	}
 
 	const_base* get(int i)
@@ -793,14 +793,23 @@ public:
 				if (id != -1)
 					id_left.setType(_identificator);
 				else
+				{
 					id_left.setType(_const);
+					cout << ptr->sons[0]->sons[0]->type << endl;
+					cout << ptr->sons[0]->sons[0]->relate->name << endl;
+
+				}
 
 				id = idTable.getId(sign->sons[1]->relate->name);
 				uniq_id id_right(id);
 				if (id != -1)
 					id_right.setType(_identificator);
 				else
+				{
 					id_right.setType(_const);
+					cout << ptr->sons[0]->sons[1]->type << endl;
+					cout << ptr->sons[0]->sons[1]->relate->name << endl;
+				}
 
 
 				add_new->form(sign->relate->name, id_left, id_right);
@@ -856,14 +865,23 @@ public:
 				if (id != -1)
 					id_left.setType(_identificator);
 				else
+				{
 					id_left.setType(_const);
+					cout << ptr->sons[0]->type << endl;
+					cout << ptr->sons[0]->relate->name << endl;
+
+				}
 
 				id = idTable.getId(ptr->sons[1]->relate->name);
 				uniq_id id_right(id);
 				if (id != -1)
 					id_right.setType(_identificator);
 				else
+				{
 					id_right.setType(_const);
+					cout << ptr->sons[1]->type << endl;
+					cout << ptr->sons[1]->relate->name << endl;
+				}
 
 
 				add_node->form(id_left, id_right);
@@ -907,142 +925,58 @@ public:
 				cout << "\nEXPRESSION MET:: " << endl;
 
 				expression_node* add_node = new expression_node(ptr);
-
+				node* sign = ptr->sons[0];
 				cout << ptr->sons[0]->sons[0]->type << endl;
 				cout << ptr->sons[0]->sons[1]->type << endl;
 				cout << ptr->sons[0]->type << endl;
 
 				int id = idTable.getId(ptr->sons[0]->sons[0]->relate->name);
 				uniq_id id_left(id);
-				bool caught = false;
+
 				if (id != -1)
 					id_left.setType(_identificator);
-				//else
-				//{
-				//	string const_name = ptr->sons[0]->sons[0]->relate->name;
-				//	id_left.setType(_const);
-				//	int const_int_attempt;
-				//	try {
-				//		const_int_attempt = stoi(const_name);
-				//	}
-				//	catch (...)
-				//	{
-				//		// it is a string
-				//		const_str* add_const_str = new const_str(const_name);
-				//		int idx = conTable.add(add_const_str);
-				//		id_left.setIdx(idx);
-				//		caught = true;
-				//	}
-				//	if (!caught)
-				//	{
-				//		// its a number
-				//		const_int* add_const_int = new const_int(const_int_attempt);
-				//		int idx = conTable.add(add_const_int);
-				//		id_left.setIdx(idx);
-				//	}
-				//}
-				//
-				caught = false;
+				else
+				{
+					id_left.setType(_const);
+					cout << ptr->sons[0]->sons[0]->type << endl;
+					cout << ptr->sons[0]->sons[0]->relate->name << endl;
+					if (ptr->sons[0]->sons[0]->sons.size() != 0)
+					{
+						cout << "childs: " << endl;
+						cout << "\t" << ptr->sons[0]->sons[0]->sons[0]->relate->name << endl;
+						cout << "\t" << ptr->sons[0]->sons[0]->sons[1]->relate->name << endl;
+					}
+				}
+
+
 				id = idTable.getId(ptr->sons[0]->sons[1]->relate->name);
 				uniq_id id_right(id);
-
+				
 				if (id != -1)
 					id_right.setType(_identificator);
-				//else
-				//{
-				//	string const_name = ptr->sons[0]->sons[1]->relate->name;
-				//	cout << ptr->sons[0]->sons[1]->type << endl;
-				//	cout << ptr->sons[0]->type << endl;
-				//	id_right.setType(_const);
-				//	int const_int_attempt;
-				//	try {
-				//		 const_int_attempt = stoi(const_name);
-				//	}
-				//	catch(...)
-				//	{
-				//		// it is a string
-				//		const_str* add_const_str = new const_str(const_name);
-				//		int idx = conTable.add(add_const_str);
-				//		id_right.setIdx(idx);
-				//		caught = true;
-				//	}
-				//	if (!caught)
-				//	{
-				//		// its a number
-				//		const_int* add_const_int = new const_int(const_int_attempt);
-				//		int idx = conTable.add(add_const_int);
-				//		id_right.setIdx(idx);
-				//	}
-				//}
+				else
+				{
+					id_right.setType(_const);
+					cout << ptr->sons[0]->sons[1]->type << endl;
+					cout << ptr->sons[0]->sons[1]->relate->name << endl;
+					if (ptr->sons[0]->sons[1]->sons.size() != 0)
+					{
+						cout << "childs: " << endl;
+						cout << "\t"<<ptr->sons[0]->sons[1]->sons[0]->relate->name << endl;
+						cout << "\t"<<ptr->sons[0]->sons[1]->sons[1]->relate->name << endl;
+					}
+					//cout << ptr->sons[0]->sons[1]->relate->name << endl;
+				}
 
-
-				//add_node->form(ptr->sons[0]->relate->name, id_left, id_right);
-				ptr = (node*)add_node;
+				add_node->form(sign->relate->name, &id_left, &id_right);
+				ptr = add_node;
 
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
+				ptr->print();
 
 				return;
 			}
-
-			// if none met, its a leaf, meaning operand
-			
-			
-			cout << ptr->relate->name << endl;
-			int id = idTable.getId(ptr->relate->name);
-
-			if (id == -1) // not in iDtable, not an identificator
-			{
-				// is a constanta
-				// a number or a string
-
-				cout << ptr->type << endl;
-				string const_name = ptr->relate->name;
-				int const_int_attempt;
-				uniq_id const_uniq_idx;
-				int conTable_idx;
-				bool caught = false;
-					try {
-						 const_int_attempt = stoi(const_name);
-					}
-					catch(...)
-					{
-						// it is a string
-						
-						const_str* add_const_str = new const_str(const_name);
-						conTable_idx = conTable.add(add_const_str);
-
-						const_uniq_idx.setIdx(conTable_idx);
-						const_uniq_idx.setType(_c_str);
-						
-						caught = true;
-					}
-					if (!caught)
-					{
-						// its a number
-
-						const_int* add_const_int = new const_int(const_int_attempt);
-						conTable_idx = conTable.add(add_const_int);
-
-						const_uniq_idx.setIdx(conTable_idx);
-						const_uniq_idx.setType(_c_int);
-					}
-
-					operand_id* add_op = new operand_id(ptr);
-					add_op->form(conTable_idx);
-					ptr = add_op;
-					node* parent = ptr->parent;
-					parent->sons[ptr->idx_in_parent] = add_op;
-
-			}
-			else
-			{
-				operand_id* add_op = new operand_id(ptr);
-				ptr = add_op;
-				node* parent = ptr->parent;
-				parent->sons[ptr->idx_in_parent] = add_op;
-			}
-
 
 			return;
 		}
