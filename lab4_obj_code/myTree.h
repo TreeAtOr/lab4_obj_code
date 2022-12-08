@@ -205,8 +205,11 @@ class condition_node : public node
 {
 public:
 	int comparator;
-	uniq_id left_op;
-	uniq_id right_op;
+	/*uniq_id left_op;
+	uniq_id right_op;*/
+
+	operand left_op;
+	operand right_op;
 
 	condition_node(node* original)
 	{
@@ -215,6 +218,12 @@ public:
 		idx_in_parent = original->idx_in_parent;
 
 		type = _condition;
+
+		sons.clear();
+		for (int i = 0; i < original->sons.size(); i++)
+		{
+			sons.push_back(original->sons[i]);
+		}
 	}
 
 	void print() override
@@ -224,7 +233,7 @@ public:
 		right_op.print(); cout << endl;
 	}
 
-	void form(string comp, uniq_id _op1, uniq_id _op2)
+	void form(string comp, operand _op1, operand _op2)
 	{
 		if (comp == "==")
 			comparator = _eq;
@@ -371,11 +380,12 @@ public:
 
 	expression_node(node* original)
 	{
-		sons.clear();
+		
 		this->parent = original->parent;
 		this->relate = original->relate;
 		idx_in_parent = original->idx_in_parent;
 		type = _expression;
+		sons.clear();
 		for (int i = 0; i < original->sons.size(); i++)
 		{
 			sons.push_back(original->sons[i]);
@@ -438,8 +448,10 @@ class assignment_node : public node
 {
 public:
 
-	uniq_id left_op;
-	uniq_id right_op;
+	/*uniq_id left_op;
+	uniq_id right_op;*/
+	operand left_op;
+	operand right_op;
 
 	assignment_node(node* original)
 	{
@@ -456,7 +468,7 @@ public:
 		right_op.print();
 		}
 
-	void form(uniq_id _l, uniq_id _r)
+	void form(operand _l, operand _r)
 	{
 		left_op = _l;
 		right_op = _r;
@@ -585,6 +597,7 @@ public:
 
 	void print()
 	{
+		cout << "\n\tidentifiers table" << endl;
 		for (int i = 0; i < table.size(); i++)
 		{
 			table[i]->print();		
@@ -599,12 +612,12 @@ typedef enum const_types_t
 	_c_none = 1,
 	_c_int,
 	_c_str
-}const_types;
+}const_type;
 
 class const_base
 {
 	public:
-	virtual const_types type()
+	virtual const_type type()
 	{
 		return _c_none;
 	}
@@ -638,13 +651,13 @@ class const_int : public const_base
 public:
 	int value;
 
-	const_types type() override
+	const_type type() override
 	{
 		return _c_int;
 	}
 	void print() override
 	{
-		cout << "int " << value;
+		cout << "int " << value << endl;
 	}
 
 	bool isEqual(bool isInt, int _int = -1, string _str = "") override
@@ -656,7 +669,10 @@ public:
 		else
 			return false;
 	}
-	
+	void setValue(int v)
+	{
+		value = v;
+	}
 
 	const_int(int v) : value(v)
 	{
@@ -667,16 +683,21 @@ public:
 class const_str : public const_base
 {
 public:
-	const_types type() override
+	const_type type() override
 	{
 		return _c_str;
 	}
 	void print() override
 	{
-		cout << "str "<< value;
+		cout << "str "<< value << endl;
 	}
 
 	string value;
+
+	void setValue(string v)
+	{
+		value = v;
+	}
 
 	const_str(string v) : value(v)
 	{
@@ -721,10 +742,38 @@ public:
 		return -1;
 	}
 
+	void reform_bool_words()
+	{
+		
+		string str = "true";
+
+		const_int* new_true_const = new const_int(1);
+		for (int i = 0; i < table.size(); i++)
+		{
+			
+			if (table[i]->type() == _c_str)
+			if (table[i]->isEqual(false, 0, str))
+			{
+				table[i] = new_true_const;
+			}
+		}
+		str = "false";
+		const_int* new_false_const = new const_int(0);
+		for (int i = 0; i < table.size(); i++)
+		{
+			if (table[i]->type() == _c_str)
+			if (table[i]->isEqual(false, 0, str))
+			{
+				table[i] = new_false_const;
+			}
+		}
+
+
+	}
 
 	void print()
 	{
-		cout << "const table" << endl;
+		cout << "\n\tconst table" << endl;
 		for (int i = 0; i < table.size(); i++)
 		{
 			cout << i << " ";
@@ -875,7 +924,7 @@ public:
 					if (idx_in_conTable == -1)
 					{
 						conTable.add(new_const);
-						conTable.print();
+						
 						idx_in_conTable = conTable.getId(false, 0, integer_string_value);
 					}
 				}
@@ -939,9 +988,23 @@ public:
 
 				node* sign = ptr->sons[0];
 
-				condition_node* add_new = new condition_node(ptr);
+				condition_node* add_node = new condition_node(ptr);
 
-				int id = idTable.getId(sign->sons[0]->relate->name);
+				operand* op1 = form_new_op(sign->sons[0]);
+				operand* op2 = form_new_op(sign->sons[1]);
+
+				add_node->form(sign->relate->name, op1, op2);
+				ptr = add_node;
+
+				node* parent = ptr->parent;
+				parent->sons[ptr->idx_in_parent] = ptr;
+
+				ptr->print();
+				parent->print();
+				cout << parent->sons[0]->sons.size() << endl;
+
+
+				/*int id = idTable.getId(sign->sons[0]->relate->name);
 				uniq_id id_left(id);
 				if (id != -1)
 					id_left.setType(_identificator);
@@ -969,8 +1032,8 @@ public:
 				ptr = add_new;
 
 				node* parent = ptr->parent;
-				parent->sons[ptr->idx_in_parent] = add_new;
-
+				parent->sons[ptr->idx_in_parent] = add_new;*/
+				return;
 			}
 
 			if (name == "if")
@@ -1011,36 +1074,19 @@ public:
 				cout << "\nASSIGNMENT MET:: " << endl;
 
 				assignment_node* add_node = new assignment_node(ptr);
+				operand* op1 = form_new_op(ptr->sons[0]);
 
-				//idTable.print();
-				int id = idTable.getId(ptr->sons[0]->relate->name);
-				uniq_id id_left(id);
-				if (id != -1)
-					id_left.setType(_identificator);
-				else
-				{
-					id_left.setType(_const);
-					cout << ptr->sons[0]->type << endl;
-					cout << ptr->sons[0]->relate->name << endl;
+				operand* op2 = form_new_op(ptr->sons[1]);
 
-				}
+				add_node->form( op1, op2);
+				ptr = add_node;
 
-				id = idTable.getId(ptr->sons[1]->relate->name);
-				uniq_id id_right(id);
-				if (id != -1)
-					id_right.setType(_identificator);
-				else
-				{
-					id_right.setType(_const);
-					cout << ptr->sons[1]->type << endl;
-					cout << ptr->sons[1]->relate->name << endl;
-				}
-
-
-				add_node->form(id_left, id_right);
-				ptr = (node*)add_node;
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
+
+				ptr->print();
+				parent->print();
+
 				return;
 			}
 
@@ -1106,85 +1152,8 @@ public:
 				else
 				{
 					operand* op1 = form_new_op(sign->sons[0]);
-					//if (sign->sons[0]->type == _none)
-					//{
-					//	// it a ID or a CONST
-					//	cout << "ID or a constanta" << endl;
-					//}
-					//else
-					//{
-					//	// its a node
-					//	cout << "node" << endl;
-					//	op1 = new operand_node(sign->sons[0]);
-					//	((operand_node*)op1)->form(sign->sons[0]);
-					//}
-
 					operand* op2 = form_new_op(sign->sons[1]);
-					//if (sign->sons[1]->type == _none)
-					//{
-					//	// it a ID or a CONST
-					//	cout << "ID or a constanta" << endl;
-
-					//	string const_name = sign->sons[1]->relate->name;
-					//	int idx_in_idTable = idTable.getId(const_name);
-					//	
-					//	int idx_in_conTable;
-					//	uniq_id* table_id;
-
-					//	if (idx_in_idTable == -1)// not in idTable, it is a contanta
-					//	{
-					//		
-					//		const_base* new_const = new const_base;
-
-					//		if (new_const->isNumber(const_name)) // this const is number
-					//		{
-					//			// form integer constanta
-					//			int integer_const_value = stoi(const_name);
-
-					//			new_const = new const_int(integer_const_value);
-					//			// search in conTable if exists
-					//			idx_in_conTable = conTable.getId(true, integer_const_value);
-					//			
-					//			if (idx_in_conTable == -1) //doesnt exist, add to conTable
-					//			{
-					//				conTable.add(new_const);
-					//				idx_in_conTable = conTable.getId(true, integer_const_value);
-					//			}
-					//		}
-					//		else // this const is string
-					//		{
-					//			// form string constanta
-					//			string integer_string_value = const_name;
-
-					//			new_const = new const_str(integer_string_value);
-					//			// search in conTable if exists
-					//			idx_in_conTable = conTable.getId(false, 0, integer_string_value);
-					//			if (idx_in_conTable == -1)
-					//			{
-					//				conTable.add(new_const);
-					//				idx_in_conTable = conTable.getId(false, 0, integer_string_value);
-					//			}
-					//		}
-					//		
-					//		table_id = new uniq_id(_const, idx_in_conTable);
-					//	}
-					//	else
-					//	{
-					//		// is in idTable
-					//		table_id = new uniq_id(_identificator, idx_in_idTable);
-					//	}
-
-					//	op2 = new operand_id(sign->sons[1]);
-					//	((operand_id*)op2)->form(*table_id);
-					//}
-					//else
-					//{
-					//	// its a node
-					//	cout << "node" << endl;
-					//	op2 = new operand_node(sign->sons[1]);
-					//	((operand_node*)op2)->form(sign->sons[1]);
-					//}
-
+					
 					add_node->form(sign->relate->name, op1, op2);
 					ptr = add_node;
 
@@ -1197,62 +1166,7 @@ public:
 
 				}
 
-
-
-
-
-				//cout << sign->sons[0]->type << endl;
-				//cout << sign->sons[0]->relate->name << endl;
-				//cout << sign->sons[1]->type << endl;
-				//cout << sign->sons[1]->relate->name << endl;
-				//cout << sign->relate->name << endl;
-
-				//int id = idTable.getId(ptr->sons[0]->relate->name);
-				//uniq_id id_left(id);
-				//cout << ptr->sons[0]->type << endl;
-				//cout << ptr->sons[0]->relate->name << endl;
-				//if (id != -1)
-				//	id_left.setType(_identificator);
-				//else
-				//{
-				//	id_left.setType(_const);
-				//	/*cout << ptr->sons[0]->sons[0]->type << endl;
-				//	cout << ptr->sons[0]->sons[0]->relate->name << endl;*/
-				//	if (ptr->sons[0]->sons.size() != 0)
-				//	{
-				//		cout << "childs: " << endl;
-				//		cout << "\t" << ptr->sons[0]->sons[0]->relate->name << endl;
-				//		cout << "\t" << ptr->sons[0]->sons[1]->relate->name << endl;
-				//	}
-				//}
-
-
-				//id = idTable.getId(ptr->sons[1]->relate->name);
-				//uniq_id id_right(id);
-				//cout << ptr->sons[1]->type << endl;
-				//cout << ptr->sons[1]->relate->name << endl;
-				//if (id != -1)
-				//	id_right.setType(_identificator);
-				//else
-				//{
-				//	id_right.setType(_const);
-
-				//	if (ptr->sons[1]->sons.size() != 0)
-				//	{
-				//		cout << "childs: " << endl;
-				//		cout << "\t" << ptr->sons[0]->sons[1]->sons[0]->relate->name << endl;
-				//		cout << "\t" << ptr->sons[0]->sons[1]->sons[1]->relate->name << endl;
-				//	}
-				//	//cout << ptr->sons[0]->sons[1]->relate->name << endl;
-				//}
-
-				//add_node->form(sign->relate->name, &id_left, &id_right);
-				//ptr = add_node;
-
-				//node* parent = ptr->parent;
-				//parent->sons[ptr->idx_in_parent] = ptr;
-				//ptr->print();
-
+				
 				return;
 			}
 
@@ -1392,7 +1306,7 @@ public:
 		arg_idx = 0;
 		body->root = (root_node*)_procl->sons[3];
 		form_body();
-
+		body->conTable.reform_bool_words();
 	}
 	
 	void form_body()
@@ -1518,6 +1432,7 @@ public:
 		printf("\n\nfinal\n");
 		print(root, 0);
 		idTable.print();
+		conTable.reform_bool_words();
 		conTable.print();
 		for (int i = 0; i < functions.size(); i++)
 		{
