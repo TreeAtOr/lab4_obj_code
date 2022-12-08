@@ -4,13 +4,13 @@ main() {
 	string z;
 	z="www";
 	bool y;
-
+	x = u;
 	y=true;//integer
 	if x==5 then /*integer integer*/ 
 		x = x+2;
-		while x > 2;
+		while x > 2 + u;
 			x=x-a1aa;
-			z=x+z+ convert_s (y);
+			z=x+z+ convert_s (y) + u;
 		endwhile;
 	else
 	z= convert_s (y); 
