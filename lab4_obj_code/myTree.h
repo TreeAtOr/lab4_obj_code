@@ -2,7 +2,7 @@
 #include "ElementOfTree.h"
 #include <queue>
 #include <iostream>
-#include "tree.h"
+#include "Tree.h"
 
 typedef enum node_types_t
 {
@@ -1226,7 +1226,7 @@ public:
 
 
 
-// Господи, помоги, пожалуйста
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 class myTree: public reformable_tree
 {
