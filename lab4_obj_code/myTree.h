@@ -466,7 +466,7 @@ public:
 		cout << "_assignment: ";
 		left_op.print();
 		right_op.print();
-		}
+	}
 
 	void form(operand _l, operand _r)
 	{
@@ -488,6 +488,13 @@ public:
 		this->relate = original->relate;
 		idx_in_parent = original->idx_in_parent;
 		type = _root;
+		/*sons.clear();
+		for (int i = 0; i < original->sons.size(); i++)
+		{
+			sons.push_back(original->sons[i]);
+		}*/
+
+
 	}
 
 
@@ -496,7 +503,9 @@ public:
 		cout << "_root body:" << endl;
 		for (int i = 0; i < instructions.size(); i++)
 		{
-			cout << "\t N" << i << " "; instructions[i]->print(); // << endl;
+			cout << "\t N" << i << " "; 
+			instructions[i]->print(); 
+			cout << endl;
 		}
 	}
 
@@ -795,7 +804,7 @@ public:
 	int max_depth;
 	void print_tree()
 	{
-		print(root, 0);
+		print((root_node *) root, 0);
 	}
 
 	void print(node* ptr, int depth)
@@ -805,7 +814,7 @@ public:
 
 		for (int i = 0; i < depth; i++)
 			printf(" ");
-		std::cout << depth << " node ";
+		//std::cout << depth << " node ";
 
 		ptr->print();
 
@@ -836,7 +845,7 @@ public:
 
 			if (name == "definition")
 			{
-				cout << "\nDEFINITION MET:: " << endl;
+				//cout << "\nDEFINITION MET:: " << endl;
 				identifier* newId = new identifier;
 				newId->setType(ptr->sons[0]->relate->name);
 				newId->setName(ptr->sons[1]->relate->name);
@@ -855,7 +864,6 @@ public:
 					ptr->sons[i]->idx_in_parent -= 1;
 			
 
-				cout << ptr->sons.size() << "  " << endl;
 				ptr->sons.erase(it);
 				
 				return 1;
@@ -881,7 +889,7 @@ public:
 		if (_ptr->type == _none)
 		{
 			// it a ID or a CONST
-			cout << "ID or a constanta" << endl;
+			//cout << "ID or a constanta" << endl;
 
 			string const_name = _ptr->relate->name;
 			int idx_in_idTable = idTable.getId(const_name);
@@ -945,7 +953,7 @@ public:
 		else
 		{
 			// its a node
-			cout << "node" << endl;
+			//cout << "node" << endl;
 			op = new operand_node(_ptr);
 			((operand_node*)op)->form(_ptr);
 		}
@@ -960,32 +968,20 @@ public:
 
 		if (depth == layer)
 		{
-			cout << "\t\tLAYER: " << layer << endl;
+			//cout << "\t\tLAYER: " << layer << endl;
 			string name = ptr->relate->name;
 
 			if (name == "root")
 			{
-				cout << "\nROOT MET:: " << endl;
-
-				printf("  size  %d\n", ptr->sons.size());
-				for (int i = 0; i < ptr->sons.size(); i++)
-				{
-					cout << " " << ptr->sons[i]->relate->name << " " << ptr->type << endl;
-				}
-
 				root_node* new_root = new root_node(ptr);
 				new_root->form(ptr->sons[0]);
-				root = new_root;
-				root->print();
-
+				root = new_root;		
 				return;
 			}
 
 			
 			if (name == "cond")
 			{
-				cout << "\nCONDITION MET" << endl;
-
 				node* sign = ptr->sons[0];
 
 				condition_node* add_node = new condition_node(ptr);
@@ -999,46 +995,13 @@ public:
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
 
-				ptr->print();
-				parent->print();
-				cout << parent->sons[0]->sons.size() << endl;
-
-
-				/*int id = idTable.getId(sign->sons[0]->relate->name);
-				uniq_id id_left(id);
-				if (id != -1)
-					id_left.setType(_identificator);
-				else
-				{
-					id_left.setType(_const);
-					cout << ptr->sons[0]->sons[0]->type << endl;
-					cout << ptr->sons[0]->sons[0]->relate->name << endl;
-
-				}
-
-				id = idTable.getId(sign->sons[1]->relate->name);
-				uniq_id id_right(id);
-				if (id != -1)
-					id_right.setType(_identificator);
-				else
-				{
-					id_right.setType(_const);
-					cout << ptr->sons[0]->sons[1]->type << endl;
-					cout << ptr->sons[0]->sons[1]->relate->name << endl;
-				}
-
-
-				add_new->form(sign->relate->name, id_left, id_right);
-				ptr = add_new;
-
-				node* parent = ptr->parent;
-				parent->sons[ptr->idx_in_parent] = add_new;*/
+				
 				return;
 			}
 
 			if (name == "if")
 			{
-				cout << "\nIF MET:: " << endl;
+				
 				if_node* add_node = new if_node(ptr);
 				add_node->form(ptr);
 				node* parent = ptr->parent;
@@ -1050,13 +1013,7 @@ public:
 
 			if (name == "function")
 			{
-				cout << "\nFUNCTION MET:: " << endl;
-				if (ptr->sons.size() > 2)
-				{
-					printf("finction definition found");
-					return;
-				}
-
+				
 				function_call_node* add_new = new function_call_node(ptr);
 				add_new->func_name = ptr->sons[0]->relate->name;
 				add_new->arg = ptr->sons[1]->sons[0];
@@ -1064,15 +1021,13 @@ public:
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
 
-
 				return;
 			}
 
 
 			if (name == "assignment")
 			{
-				cout << "\nASSIGNMENT MET:: " << endl;
-
+				
 				assignment_node* add_node = new assignment_node(ptr);
 				operand* op1 = form_new_op(ptr->sons[0]);
 
@@ -1084,16 +1039,13 @@ public:
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
 
-				ptr->print();
-				parent->print();
 
 				return;
 			}
 
 			if (name == "program")
 			{
-				cout << "\nPROGRAM MET:: " << endl;
-
+				
 				root_node* add_node = new root_node(ptr);
 				add_node->form(ptr);
 				ptr = (node*)add_node;
@@ -1105,14 +1057,13 @@ public:
 
 			if (name == "while")
 			{
-				cout << "\nWHILE MET:: " << endl;
-
+				
 				while_node* add_node = new while_node(ptr);
 
 				add_node->form((condition_node*)ptr->sons[0], ptr->sons[1]);
-				ptr->sons[0]->print();
+				
 				ptr = (node*)add_node;
-				ptr->print();
+				
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
 
@@ -1121,16 +1072,9 @@ public:
 			
 			if (name == "+" || name == "-" || name == "*" || name == "/")
 			{
-				cout << "\nEXPRESSION +-*/ MET:: " << endl;
+
 				node* sign = ptr;
-				cout << ptr->type << endl;
-				cout << ptr->relate->name << endl;
-				cout << sign->type << endl;
-				cout << sign->relate->name << endl;
-				cout << sign->sons[0]->type << endl;
-				cout << sign->sons[0]->relate->name << endl;
-				cout << sign->sons[1]->type << endl;
-				cout << sign->sons[1]->relate->name << endl;
+
 				expression_node* add_node = new expression_node(sign);
 
 				if (sign->sons.size() == 0)
@@ -1158,11 +1102,7 @@ public:
 					ptr = add_node;
 
 					node* parent = ptr->parent;
-					parent->sons[ptr->idx_in_parent] = ptr;
-					
-					ptr->print();
-					parent->print();
-					cout << parent->sons[0]->sons.size() << endl;
+					parent->sons[ptr->idx_in_parent] = ptr;				
 
 				}
 
@@ -1172,18 +1112,8 @@ public:
 
 			if (name == "expr")
 			{
-				cout << "\nEXPRESSION MET:: " << endl;
-				print_tree();
+				
 				node* sign = ptr->sons[0];
-				cout << ptr->type << endl;
-				cout << ptr->relate->name << endl;
-				cout << sign->type << endl;
-				cout << sign->relate->name << endl;
-				cout << sign->sons[0]->type << endl;
-				cout << sign->sons[0]->relate->name << endl;
-				cout << sign->sons[1]->type << endl;
-				cout << sign->sons[1]->relate->name << endl;
-
 				expression_node* add_node = new expression_node(ptr);
 			
 				operand* op1 = form_new_op(sign->sons[0]);
@@ -1194,56 +1124,6 @@ public:
 
 				node* parent = ptr->parent;
 				parent->sons[ptr->idx_in_parent] = ptr;
-
-				ptr->print();
-
-				
-
-				//int id = idTable.getId(ptr->sons[0]->sons[0]->relate->name);
-				//uniq_id id_left(id);
-				//cout << ptr->sons[0]->sons[0]->type << endl;
-				//cout << ptr->sons[0]->sons[0]->relate->name << endl;
-				//if (id != -1)
-				//	id_left.setType(_identificator);
-				//else
-				//{
-				//	id_left.setType(_const);
-				//	/*cout << ptr->sons[0]->sons[0]->type << endl;
-				//	cout << ptr->sons[0]->sons[0]->relate->name << endl;*/
-				//	if (ptr->sons[0]->sons[0]->sons.size() != 0)
-				//	{
-				//		cout << "childs: " << endl;
-				//		cout << "\t" << ptr->sons[0]->sons[0]->sons[0]->relate->name << endl;
-				//		cout << "\t" << ptr->sons[0]->sons[0]->sons[1]->relate->name << endl;
-				//	}
-				//}
-
-
-				//id = idTable.getId(ptr->sons[0]->sons[1]->relate->name);
-				//uniq_id id_right(id);
-				//cout << ptr->sons[0]->sons[1]->type << endl;
-				//cout << ptr->sons[0]->sons[1]->relate->name << endl;
-				//if (id != -1)
-				//	id_right.setType(_identificator);
-				//else
-				//{
-				//	id_right.setType(_const);
-				//	
-				//	if (ptr->sons[0]->sons[1]->sons.size() != 0)
-				//	{
-				//		cout << "childs: " << endl;
-				//		cout << "\t"<<ptr->sons[0]->sons[1]->sons[0]->relate->name << endl;
-				//		cout << "\t"<<ptr->sons[0]->sons[1]->sons[1]->relate->name << endl;
-				//	}
-				//	//cout << ptr->sons[0]->sons[1]->relate->name << endl;
-				//}
-
-				//add_node->form(sign->relate->name, &id_left, &id_right);
-				//ptr = add_node;
-
-				//node* parent = ptr->parent;
-				//parent->sons[ptr->idx_in_parent] = ptr;
-				//ptr->print();
 
 				return;
 			}
@@ -1266,9 +1146,9 @@ public:
 
 	int return_type;
 	string name;
-	int arg_idx;
+
 	reformable_tree* body;
-	identifier* return_value; // int id
+	uniq_id* return_value_id; // int id
 
 	func_procl()
 	{
@@ -1296,17 +1176,19 @@ public:
 		identifier* new_arg = new identifier;
 		new_arg->setType(_procl->sons[2]->sons[0]->sons[0]->relate->name);
 		new_arg->setName(_procl->sons[2]->sons[0]->sons[1]->relate->name);
-		
-		
-		body = new reformable_tree;
-		
+			
+		body = new reformable_tree;	
 		body->idTable.add(new_arg);
 		
-		
-		arg_idx = 0;
 		body->root = (root_node*)_procl->sons[3];
+	
 		form_body();
+
+		//body->root = new root_node(_procl->sons[3]);
 		body->conTable.reform_bool_words();
+
+		int idx_of_return_value = body->idTable.getId(_procl->sons[4]->sons[0]->relate->name);
+		return_value_id = new uniq_id(_identificator, idx_of_return_value);
 	}
 	
 	void form_body()
@@ -1315,7 +1197,6 @@ public:
 		body->form_idTable();
 		for (int i = body->max_depth; i >= 0; i--)
 		{
-			printf("\t\t%d\n", i);
 			body->reform_layer(body->root, 0, i);
 		}
 
@@ -1333,10 +1214,12 @@ public:
 
 	void print()
 	{
-		cout << return_type << " " << name;
+		cout << return_type << " " << name << endl;
 		body->print_tree();
 		body->idTable.print();
 		body->conTable.print();
+		cout << "returns : ";
+		body->idTable.get(return_value_id->getIdx())->print();
 	}
 };
 
@@ -1383,10 +1266,9 @@ public:
 		
 		for (int i = 1; i < root->sons.size(); i++)
 		{
-			printf("\t\t%d\n", i);
+			
 			form_func(root->sons[i]);
 		}
-		print(root, 0);
 	}
 
 	void form_func(node* ptr)
@@ -1394,11 +1276,11 @@ public:
 		string name = ptr->relate->name;
 		if (name == "function")
 		{
-			printf("function definition found");
+			//printf("function definition found");
 
 			func_procl* new_procl = new func_procl();
 			new_procl->form(ptr);
-			new_procl->print();
+			//new_procl->print();
 			functions.push_back(new_procl);
 
 			int id = ptr->idx_in_parent;
@@ -1425,9 +1307,9 @@ public:
 
 		for (int i = max_depth; i >= 0; i--)
 		{
-			printf("\t\t%d\n", i);
+			//printf("\t\t%d\n", i);
 			reform_layer(root, 0, i);
-			print(root, 0);
+			//print(root, 0);
 		}
 		printf("\n\nfinal\n");
 		print(root, 0);
@@ -1436,6 +1318,7 @@ public:
 		conTable.print();
 		for (int i = 0; i < functions.size(); i++)
 		{
+			cout << "\n\tFUNCTION PROCL N" << i << endl;
 			functions[i]->print();
 		}
 
