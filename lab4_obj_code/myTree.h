@@ -125,18 +125,19 @@ class operand: public node
 	
 	operand()
 	{
-		optype = _none;
+		this->optype = operand_type::_none;
 	}
 	operand(node* original)
 	{
+		this->optype = operand_type::_none;
 		this->parent = original->parent;
 		this->relate = original->relate;
 		idx_in_parent = original->idx_in_parent;
 		type = _operand;
 	}
-	virtual operand_type op_type()
+	operand_type op_type()
 	{
-		return optype;
+		return this->optype;
 	}
 	virtual void print()
 	{
@@ -151,10 +152,11 @@ public:
 	node* value;
 	operand_node()
 	{
-		optype = _node;
+		this->optype = _node;
 	}
 	operand_node(node* original)
 	{
+		this->optype = operand_type::_node;
 		this->parent = original->parent;
 		this->relate = original->relate;
 		idx_in_parent = original->idx_in_parent;
@@ -164,11 +166,6 @@ public:
 	void form(node* _node)
 	{
 		value = _node;
-	}
-
-	operand_type op_type() override
-	{
-		return optype;
 	}
 
 	void print() override
@@ -182,27 +179,23 @@ class operand_id : public operand
 {
 public:
 
-	uniq_id value;
+	uniq_id* value;
 	operand_id(node* original)
 	{
-		optype = _id;
+		this->optype = operand_type::_id;
 		this->parent = original->parent;
 		this->relate = original->relate;
 		idx_in_parent = original->idx_in_parent;
 		type = _operand;
 	}
-	operand_type op_type() override
-	{
-		return optype;
-	}
-	void form(uniq_id id)
+	void form(uniq_id* id)
 	{
 		value = id;
 	}
 
 	void print() override
 	{
-		value.print();
+		value->print();
 	}
 
 };
@@ -215,8 +208,8 @@ public:
 	/*uniq_id left_op;
 	uniq_id right_op;*/
 
-	operand left_op;
-	operand right_op;
+	operand* left_op;
+	operand* right_op;
 
 	condition_node(node* original)
 	{
@@ -236,11 +229,11 @@ public:
 	void print() override
 	{
 		cout << "_condition: type(" << comparator << ") ";
-		left_op.print(); cout << " "; 		
-		right_op.print(); cout << endl;
+		left_op->print(); cout << " "; 		
+		right_op->print(); cout << endl;
 	}
 
-	void form(string comp, operand _op1, operand _op2)
+	void form(string comp, operand* _op1, operand* _op2)
 	{
 		if (comp == "==")
 			comparator = _eq;
@@ -457,8 +450,8 @@ public:
 
 	/*uniq_id left_op;
 	uniq_id right_op;*/
-	operand left_op;
-	operand right_op;
+	operand* left_op;
+	operand* right_op;
 
 	assignment_node(node* original)
 	{
@@ -471,11 +464,11 @@ public:
 	void print() override
 	{
 		cout << "_assignment: ";
-		left_op.print();
-		right_op.print();
+		left_op->print();
+		right_op->print();
 	}
 
-	void form(operand _l, operand _r)
+	void form(operand* _l, operand* _r)
 	{
 		left_op = _l;
 		right_op = _r;
@@ -954,7 +947,7 @@ public:
 			}
 
 			op = new operand_id(_ptr);
-			((operand_id*)op)->form(*table_id);
+			((operand_id*)op)->form(table_id);
 
 		}
 		else
