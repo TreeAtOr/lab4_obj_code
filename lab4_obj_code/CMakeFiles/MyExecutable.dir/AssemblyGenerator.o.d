@@ -1,10 +1,11 @@
-CMakeFiles/MyExecutable.dir/main.o: \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/main.cpp \
+CMakeFiles/MyExecutable.dir/AssemblyGenerator.o: \
+ /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/AssemblyGenerator.cpp \
  /usr/include/stdc-predef.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/settings.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/ProgramReader.h \
- /usr/include/c++/12.2.0/fstream /usr/include/c++/12.2.0/istream \
- /usr/include/c++/12.2.0/ios /usr/include/c++/12.2.0/iosfwd \
+ /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/AssemblyGenerator.h \
+ /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/myTree.h \
+ /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/ElementOfTree.h \
+ /usr/include/c++/12.2.0/vector \
+ /usr/include/c++/12.2.0/bits/stl_algobase.h \
  /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -13,8 +14,44 @@ CMakeFiles/MyExecutable.dir/main.o: \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/cpu_defines.h \
  /usr/include/c++/12.2.0/pstl/pstl_config.h \
- /usr/include/c++/12.2.0/bits/stringfwd.h \
+ /usr/include/c++/12.2.0/bits/functexcept.h \
+ /usr/include/c++/12.2.0/bits/exception_defines.h \
+ /usr/include/c++/12.2.0/bits/cpp_type_traits.h \
+ /usr/include/c++/12.2.0/ext/type_traits.h \
+ /usr/include/c++/12.2.0/ext/numeric_traits.h \
+ /usr/include/c++/12.2.0/bits/stl_pair.h \
+ /usr/include/c++/12.2.0/type_traits /usr/include/c++/12.2.0/bits/move.h \
+ /usr/include/c++/12.2.0/bits/utility.h \
+ /usr/include/c++/12.2.0/bits/stl_iterator_base_types.h \
+ /usr/include/c++/12.2.0/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/12.2.0/bits/concept_check.h \
+ /usr/include/c++/12.2.0/debug/assertions.h \
+ /usr/include/c++/12.2.0/bits/stl_iterator.h \
+ /usr/include/c++/12.2.0/bits/ptr_traits.h \
+ /usr/include/c++/12.2.0/debug/debug.h \
+ /usr/include/c++/12.2.0/bits/predefined_ops.h \
+ /usr/include/c++/12.2.0/bits/allocator.h \
+ /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/12.2.0/bits/new_allocator.h /usr/include/c++/12.2.0/new \
+ /usr/include/c++/12.2.0/bits/exception.h \
  /usr/include/c++/12.2.0/bits/memoryfwd.h \
+ /usr/include/c++/12.2.0/bits/stl_construct.h \
+ /usr/include/c++/12.2.0/bits/stl_uninitialized.h \
+ /usr/include/c++/12.2.0/ext/alloc_traits.h \
+ /usr/include/c++/12.2.0/bits/alloc_traits.h \
+ /usr/include/c++/12.2.0/bits/stl_vector.h \
+ /usr/include/c++/12.2.0/initializer_list \
+ /usr/include/c++/12.2.0/bits/stl_bvector.h \
+ /usr/include/c++/12.2.0/bits/functional_hash.h \
+ /usr/include/c++/12.2.0/bits/hash_bytes.h \
+ /usr/include/c++/12.2.0/bits/refwrap.h \
+ /usr/include/c++/12.2.0/bits/invoke.h \
+ /usr/include/c++/12.2.0/bits/stl_function.h \
+ /usr/include/c++/12.2.0/backward/binders.h \
+ /usr/include/c++/12.2.0/bits/range_access.h \
+ /usr/include/c++/12.2.0/bits/vector.tcc /usr/include/c++/12.2.0/iostream \
+ /usr/include/c++/12.2.0/ostream /usr/include/c++/12.2.0/ios \
+ /usr/include/c++/12.2.0/iosfwd /usr/include/c++/12.2.0/bits/stringfwd.h \
  /usr/include/c++/12.2.0/bits/postypes.h /usr/include/c++/12.2.0/cwchar \
  /usr/include/wchar.h /usr/include/bits/libc-header-start.h \
  /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
@@ -25,13 +62,9 @@ CMakeFiles/MyExecutable.dir/main.o: \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/locale_t.h \
  /usr/include/bits/types/__locale_t.h /usr/include/c++/12.2.0/exception \
- /usr/include/c++/12.2.0/bits/exception.h \
  /usr/include/c++/12.2.0/bits/exception_ptr.h \
- /usr/include/c++/12.2.0/bits/exception_defines.h \
  /usr/include/c++/12.2.0/bits/cxxabi_init_exception.h \
  /usr/include/c++/12.2.0/typeinfo \
- /usr/include/c++/12.2.0/bits/hash_bytes.h /usr/include/c++/12.2.0/new \
- /usr/include/c++/12.2.0/bits/move.h /usr/include/c++/12.2.0/type_traits \
  /usr/include/c++/12.2.0/bits/nested_exception.h \
  /usr/include/c++/12.2.0/bits/char_traits.h \
  /usr/include/c++/12.2.0/cstdint \
@@ -67,38 +100,11 @@ CMakeFiles/MyExecutable.dir/main.o: \
  /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/atomic_word.h \
  /usr/include/sys/single_threaded.h \
  /usr/include/c++/12.2.0/bits/locale_classes.h \
- /usr/include/c++/12.2.0/string /usr/include/c++/12.2.0/bits/allocator.h \
- /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/12.2.0/bits/new_allocator.h \
- /usr/include/c++/12.2.0/bits/functexcept.h \
- /usr/include/c++/12.2.0/bits/cpp_type_traits.h \
+ /usr/include/c++/12.2.0/string \
  /usr/include/c++/12.2.0/bits/ostream_insert.h \
  /usr/include/c++/12.2.0/bits/cxxabi_forced.h \
- /usr/include/c++/12.2.0/bits/stl_iterator_base_types.h \
- /usr/include/c++/12.2.0/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/12.2.0/bits/concept_check.h \
- /usr/include/c++/12.2.0/debug/assertions.h \
- /usr/include/c++/12.2.0/bits/stl_iterator.h \
- /usr/include/c++/12.2.0/ext/type_traits.h \
- /usr/include/c++/12.2.0/bits/ptr_traits.h \
- /usr/include/c++/12.2.0/bits/stl_function.h \
- /usr/include/c++/12.2.0/backward/binders.h \
- /usr/include/c++/12.2.0/ext/numeric_traits.h \
- /usr/include/c++/12.2.0/bits/stl_algobase.h \
- /usr/include/c++/12.2.0/bits/stl_pair.h \
- /usr/include/c++/12.2.0/bits/utility.h \
- /usr/include/c++/12.2.0/debug/debug.h \
- /usr/include/c++/12.2.0/bits/predefined_ops.h \
- /usr/include/c++/12.2.0/bits/refwrap.h \
- /usr/include/c++/12.2.0/bits/invoke.h \
- /usr/include/c++/12.2.0/bits/range_access.h \
- /usr/include/c++/12.2.0/initializer_list \
  /usr/include/c++/12.2.0/bits/basic_string.h \
- /usr/include/c++/12.2.0/ext/alloc_traits.h \
- /usr/include/c++/12.2.0/bits/alloc_traits.h \
- /usr/include/c++/12.2.0/bits/stl_construct.h \
  /usr/include/c++/12.2.0/string_view \
- /usr/include/c++/12.2.0/bits/functional_hash.h \
  /usr/include/c++/12.2.0/bits/string_view.tcc \
  /usr/include/c++/12.2.0/ext/string_conversions.h \
  /usr/include/c++/12.2.0/cstdlib /usr/include/stdlib.h \
@@ -133,49 +139,13 @@ CMakeFiles/MyExecutable.dir/main.o: \
  /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/ctype_inline.h \
  /usr/include/c++/12.2.0/bits/locale_facets.tcc \
  /usr/include/c++/12.2.0/bits/basic_ios.tcc \
- /usr/include/c++/12.2.0/ostream /usr/include/c++/12.2.0/bits/ostream.tcc \
+ /usr/include/c++/12.2.0/bits/ostream.tcc /usr/include/c++/12.2.0/istream \
  /usr/include/c++/12.2.0/bits/istream.tcc \
- /usr/include/c++/12.2.0/bits/codecvt.h \
- /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/basic_file.h \
- /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/c++io.h \
- /usr/include/c++/12.2.0/bits/fstream.tcc \
- /usr/include/c++/12.2.0/iostream \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/DividerReader.h \
- /usr/include/c++/12.2.0/set /usr/include/c++/12.2.0/bits/stl_tree.h \
- /usr/include/c++/12.2.0/ext/aligned_buffer.h \
- /usr/include/c++/12.2.0/bits/node_handle.h \
- /usr/include/c++/12.2.0/bits/stl_set.h \
- /usr/include/c++/12.2.0/bits/stl_multiset.h \
- /usr/include/c++/12.2.0/bits/erase_if.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/KeywordReader.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/Parser.h \
- /usr/include/c++/12.2.0/vector \
- /usr/include/c++/12.2.0/bits/stl_uninitialized.h \
- /usr/include/c++/12.2.0/bits/stl_vector.h \
- /usr/include/c++/12.2.0/bits/stl_bvector.h \
- /usr/include/c++/12.2.0/bits/vector.tcc \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/Token.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/SyntaxParser.h \
- /usr/include/c++/12.2.0/iomanip /usr/include/c++/12.2.0/locale \
- /usr/include/c++/12.2.0/bits/locale_facets_nonio.h \
- /usr/include/c++/12.2.0/ctime \
- /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/time_members.h \
- /usr/include/c++/12.2.0/x86_64-pc-linux-gnu/bits/messages_members.h \
- /usr/include/libintl.h \
- /usr/include/c++/12.2.0/bits/locale_facets_nonio.tcc \
- /usr/include/c++/12.2.0/bits/locale_conv.h \
- /usr/include/c++/12.2.0/bits/quoted_string.h \
- /usr/include/c++/12.2.0/sstream /usr/include/c++/12.2.0/bits/sstream.tcc \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/SyntaxError.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/MultipleDefinitionError.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/MissedSemicolonError.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/Tree.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/ElementOfTree.h \
+ /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/settings.h \
  /usr/include/c++/12.2.0/queue /usr/include/c++/12.2.0/deque \
  /usr/include/c++/12.2.0/bits/stl_deque.h \
  /usr/include/c++/12.2.0/bits/deque.tcc \
  /usr/include/c++/12.2.0/bits/stl_heap.h \
  /usr/include/c++/12.2.0/bits/stl_queue.h \
  /usr/include/c++/12.2.0/bits/uses_allocator.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/myTree.h \
- /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/AssemblyGenerator.h
+ /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/Tree.h

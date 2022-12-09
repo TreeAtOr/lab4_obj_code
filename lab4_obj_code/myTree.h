@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Tree.h"
 
+using namespace std;
+
 typedef enum node_types_t
 {
 	__invalid,

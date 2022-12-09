@@ -6,11 +6,12 @@
 #include "Parser.h"
 #include "SyntaxParser.h"
 #include "myTree.h"
+#include "AssemblyGenerator.h"
 
 int main()
 {
 	const char* programFileName = "program.txt";	//
-	const char* dividersFileName = "dividers.txt";  // названия файлов
+	const char* dividersFileName = "dividers.txt";  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	const char* keywordsFileName = "keywords.txt";  //
 
 	Parser p;
@@ -23,11 +24,13 @@ int main()
 	syntaxParser.parseTokens(listOfTokens);
 	//syntaxParser.printTree();
 	//syntaxParser.printIdentifiersTable();
-
 	myTree otree(syntaxParser.getTree());
 	//otree.print_tree();
 	//otree.print_tree_by_layers();
 	otree.form_new_tree();
-	//otree.printObjTree();
+	//otree.print_tree_by_layers();
+
+	AssemblyGenerator generator;
+	generator.build_and_print(otree);
 	return 0;
 }

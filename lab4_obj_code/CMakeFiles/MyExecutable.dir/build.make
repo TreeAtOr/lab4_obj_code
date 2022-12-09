@@ -69,10 +69,24 @@ include CMakeFiles/MyExecutable.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/MyExecutable.dir/flags.make
 
+CMakeFiles/MyExecutable.dir/AssemblyGenerator.o: CMakeFiles/MyExecutable.dir/flags.make
+CMakeFiles/MyExecutable.dir/AssemblyGenerator.o: AssemblyGenerator.cpp
+CMakeFiles/MyExecutable.dir/AssemblyGenerator.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MyExecutable.dir/AssemblyGenerator.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/AssemblyGenerator.o -MF CMakeFiles/MyExecutable.dir/AssemblyGenerator.o.d -o CMakeFiles/MyExecutable.dir/AssemblyGenerator.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/AssemblyGenerator.cpp
+
+CMakeFiles/MyExecutable.dir/AssemblyGenerator.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MyExecutable.dir/AssemblyGenerator.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/AssemblyGenerator.cpp > CMakeFiles/MyExecutable.dir/AssemblyGenerator.i
+
+CMakeFiles/MyExecutable.dir/AssemblyGenerator.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MyExecutable.dir/AssemblyGenerator.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/AssemblyGenerator.cpp -o CMakeFiles/MyExecutable.dir/AssemblyGenerator.s
+
 CMakeFiles/MyExecutable.dir/DividerReader.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/DividerReader.o: DividerReader.cpp
 CMakeFiles/MyExecutable.dir/DividerReader.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MyExecutable.dir/DividerReader.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MyExecutable.dir/DividerReader.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/DividerReader.o -MF CMakeFiles/MyExecutable.dir/DividerReader.o.d -o CMakeFiles/MyExecutable.dir/DividerReader.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/DividerReader.cpp
 
 CMakeFiles/MyExecutable.dir/DividerReader.i: cmake_force
@@ -86,7 +100,7 @@ CMakeFiles/MyExecutable.dir/DividerReader.s: cmake_force
 CMakeFiles/MyExecutable.dir/ElementOfTree.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/ElementOfTree.o: ElementOfTree.cpp
 CMakeFiles/MyExecutable.dir/ElementOfTree.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MyExecutable.dir/ElementOfTree.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MyExecutable.dir/ElementOfTree.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/ElementOfTree.o -MF CMakeFiles/MyExecutable.dir/ElementOfTree.o.d -o CMakeFiles/MyExecutable.dir/ElementOfTree.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/ElementOfTree.cpp
 
 CMakeFiles/MyExecutable.dir/ElementOfTree.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/MyExecutable.dir/ElementOfTree.s: cmake_force
 CMakeFiles/MyExecutable.dir/KeywordReader.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/KeywordReader.o: KeywordReader.cpp
 CMakeFiles/MyExecutable.dir/KeywordReader.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MyExecutable.dir/KeywordReader.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MyExecutable.dir/KeywordReader.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/KeywordReader.o -MF CMakeFiles/MyExecutable.dir/KeywordReader.o.d -o CMakeFiles/MyExecutable.dir/KeywordReader.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/KeywordReader.cpp
 
 CMakeFiles/MyExecutable.dir/KeywordReader.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/MyExecutable.dir/KeywordReader.s: cmake_force
 CMakeFiles/MyExecutable.dir/MissedSemicolonError.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/MissedSemicolonError.o: MissedSemicolonError.cpp
 CMakeFiles/MyExecutable.dir/MissedSemicolonError.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MyExecutable.dir/MissedSemicolonError.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MyExecutable.dir/MissedSemicolonError.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/MissedSemicolonError.o -MF CMakeFiles/MyExecutable.dir/MissedSemicolonError.o.d -o CMakeFiles/MyExecutable.dir/MissedSemicolonError.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/MissedSemicolonError.cpp
 
 CMakeFiles/MyExecutable.dir/MissedSemicolonError.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/MyExecutable.dir/MissedSemicolonError.s: cmake_force
 CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o: MultipleDefinitionError.cpp
 CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o -MF CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o.d -o CMakeFiles/MyExecutable.dir/MultipleDefinitionError.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/MultipleDefinitionError.cpp
 
 CMakeFiles/MyExecutable.dir/MultipleDefinitionError.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/MyExecutable.dir/MultipleDefinitionError.s: cmake_force
 CMakeFiles/MyExecutable.dir/Parser.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/Parser.o: Parser.cpp
 CMakeFiles/MyExecutable.dir/Parser.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MyExecutable.dir/Parser.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MyExecutable.dir/Parser.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/Parser.o -MF CMakeFiles/MyExecutable.dir/Parser.o.d -o CMakeFiles/MyExecutable.dir/Parser.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/Parser.cpp
 
 CMakeFiles/MyExecutable.dir/Parser.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/MyExecutable.dir/Parser.s: cmake_force
 CMakeFiles/MyExecutable.dir/ProgramReader.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/ProgramReader.o: ProgramReader.cpp
 CMakeFiles/MyExecutable.dir/ProgramReader.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MyExecutable.dir/ProgramReader.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/MyExecutable.dir/ProgramReader.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/ProgramReader.o -MF CMakeFiles/MyExecutable.dir/ProgramReader.o.d -o CMakeFiles/MyExecutable.dir/ProgramReader.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/ProgramReader.cpp
 
 CMakeFiles/MyExecutable.dir/ProgramReader.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/MyExecutable.dir/ProgramReader.s: cmake_force
 CMakeFiles/MyExecutable.dir/SyntaxError.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/SyntaxError.o: SyntaxError.cpp
 CMakeFiles/MyExecutable.dir/SyntaxError.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/MyExecutable.dir/SyntaxError.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/MyExecutable.dir/SyntaxError.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/SyntaxError.o -MF CMakeFiles/MyExecutable.dir/SyntaxError.o.d -o CMakeFiles/MyExecutable.dir/SyntaxError.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/SyntaxError.cpp
 
 CMakeFiles/MyExecutable.dir/SyntaxError.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/MyExecutable.dir/SyntaxError.s: cmake_force
 CMakeFiles/MyExecutable.dir/SyntaxParser.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/SyntaxParser.o: SyntaxParser.cpp
 CMakeFiles/MyExecutable.dir/SyntaxParser.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/MyExecutable.dir/SyntaxParser.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MyExecutable.dir/SyntaxParser.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/SyntaxParser.o -MF CMakeFiles/MyExecutable.dir/SyntaxParser.o.d -o CMakeFiles/MyExecutable.dir/SyntaxParser.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/SyntaxParser.cpp
 
 CMakeFiles/MyExecutable.dir/SyntaxParser.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/MyExecutable.dir/SyntaxParser.s: cmake_force
 CMakeFiles/MyExecutable.dir/Tree.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/Tree.o: Tree.cpp
 CMakeFiles/MyExecutable.dir/Tree.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MyExecutable.dir/Tree.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/MyExecutable.dir/Tree.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/Tree.o -MF CMakeFiles/MyExecutable.dir/Tree.o.d -o CMakeFiles/MyExecutable.dir/Tree.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/Tree.cpp
 
 CMakeFiles/MyExecutable.dir/Tree.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/MyExecutable.dir/Tree.s: cmake_force
 CMakeFiles/MyExecutable.dir/main.o: CMakeFiles/MyExecutable.dir/flags.make
 CMakeFiles/MyExecutable.dir/main.o: main.cpp
 CMakeFiles/MyExecutable.dir/main.o: CMakeFiles/MyExecutable.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/MyExecutable.dir/main.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/MyExecutable.dir/main.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MyExecutable.dir/main.o -MF CMakeFiles/MyExecutable.dir/main.o.d -o CMakeFiles/MyExecutable.dir/main.o -c /home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/main.cpp
 
 CMakeFiles/MyExecutable.dir/main.i: cmake_force
@@ -225,6 +239,7 @@ CMakeFiles/MyExecutable.dir/main.s: cmake_force
 
 # Object files for target MyExecutable
 MyExecutable_OBJECTS = \
+"CMakeFiles/MyExecutable.dir/AssemblyGenerator.o" \
 "CMakeFiles/MyExecutable.dir/DividerReader.o" \
 "CMakeFiles/MyExecutable.dir/ElementOfTree.o" \
 "CMakeFiles/MyExecutable.dir/KeywordReader.o" \
@@ -240,6 +255,7 @@ MyExecutable_OBJECTS = \
 # External object files for target MyExecutable
 MyExecutable_EXTERNAL_OBJECTS =
 
+MyExecutable: CMakeFiles/MyExecutable.dir/AssemblyGenerator.o
 MyExecutable: CMakeFiles/MyExecutable.dir/DividerReader.o
 MyExecutable: CMakeFiles/MyExecutable.dir/ElementOfTree.o
 MyExecutable: CMakeFiles/MyExecutable.dir/KeywordReader.o
@@ -253,7 +269,7 @@ MyExecutable: CMakeFiles/MyExecutable.dir/Tree.o
 MyExecutable: CMakeFiles/MyExecutable.dir/main.o
 MyExecutable: CMakeFiles/MyExecutable.dir/build.make
 MyExecutable: CMakeFiles/MyExecutable.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable MyExecutable"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable MyExecutable"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MyExecutable.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

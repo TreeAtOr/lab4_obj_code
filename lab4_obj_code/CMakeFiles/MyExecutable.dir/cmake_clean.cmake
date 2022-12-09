@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MyExecutable.dir/AssemblyGenerator.o"
+  "CMakeFiles/MyExecutable.dir/AssemblyGenerator.o.d"
   "CMakeFiles/MyExecutable.dir/DividerReader.o"
   "CMakeFiles/MyExecutable.dir/DividerReader.o.d"
   "CMakeFiles/MyExecutable.dir/ElementOfTree.o"

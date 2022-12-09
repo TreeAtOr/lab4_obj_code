@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/AssemblyGenerator.cpp" "CMakeFiles/MyExecutable.dir/AssemblyGenerator.o" "gcc" "CMakeFiles/MyExecutable.dir/AssemblyGenerator.o.d"
   "/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/DividerReader.cpp" "CMakeFiles/MyExecutable.dir/DividerReader.o" "gcc" "CMakeFiles/MyExecutable.dir/DividerReader.o.d"
   "/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/ElementOfTree.cpp" "CMakeFiles/MyExecutable.dir/ElementOfTree.o" "gcc" "CMakeFiles/MyExecutable.dir/ElementOfTree.o.d"
   "/home/lost/Проекты/University/lab4_obj_code/lab4_obj_code/KeywordReader.cpp" "CMakeFiles/MyExecutable.dir/KeywordReader.o" "gcc" "CMakeFiles/MyExecutable.dir/KeywordReader.o.d"

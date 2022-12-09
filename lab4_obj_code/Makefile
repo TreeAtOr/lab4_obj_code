@@ -130,6 +130,21 @@ MyExecutable/fast:
 .PHONY : MyExecutable/fast
 
 # target to build an object file
+AssemblyGenerator.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/AssemblyGenerator.o
+.PHONY : AssemblyGenerator.o
+
+# target to preprocess a source file
+AssemblyGenerator.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/AssemblyGenerator.i
+.PHONY : AssemblyGenerator.i
+
+# target to generate assembly for a file
+AssemblyGenerator.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/AssemblyGenerator.s
+.PHONY : AssemblyGenerator.s
+
+# target to build an object file
 DividerReader.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyExecutable.dir/build.make CMakeFiles/MyExecutable.dir/DividerReader.o
 .PHONY : DividerReader.o
@@ -303,6 +318,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MyExecutable"
+	@echo "... AssemblyGenerator.o"
+	@echo "... AssemblyGenerator.i"
+	@echo "... AssemblyGenerator.s"
 	@echo "... DividerReader.o"
 	@echo "... DividerReader.i"
 	@echo "... DividerReader.s"
