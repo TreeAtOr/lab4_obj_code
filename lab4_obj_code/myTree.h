@@ -118,10 +118,14 @@ typedef enum operand_types_t
 
 class operand: public node
 {
+	
 	public:
+		
+	operand_type optype;
+	
 	operand()
 	{
-
+		optype = _none;
 	}
 	operand(node* original)
 	{
@@ -132,7 +136,7 @@ class operand: public node
 	}
 	virtual operand_type op_type()
 	{
-		return _none;
+		return optype;
 	}
 	virtual void print()
 	{
@@ -147,7 +151,7 @@ public:
 	node* value;
 	operand_node()
 	{
-
+		optype = _node;
 	}
 	operand_node(node* original)
 	{
@@ -164,7 +168,7 @@ public:
 
 	operand_type op_type() override
 	{
-		return _node;
+		return optype;
 	}
 
 	void print() override
@@ -181,6 +185,7 @@ public:
 	uniq_id value;
 	operand_id(node* original)
 	{
+		optype = _id;
 		this->parent = original->parent;
 		this->relate = original->relate;
 		idx_in_parent = original->idx_in_parent;
@@ -188,7 +193,7 @@ public:
 	}
 	operand_type op_type() override
 	{
-		return _id;
+		return optype;
 	}
 	void form(uniq_id id)
 	{
