@@ -41,8 +41,6 @@ string const2string(const_base *row, int i, string prefix = string()) {
 
 vector<string> make_expression(expression_node *node, string prefix) {
   vector<string> row;
-  cout << "make_expression " << node->left_op->op_type()
-       << node->right_op->op_type() << endl;
   if (node->left_op->op_type() == operand_type::_id &&
       node->right_op->op_type() == operand_type::_id) {
     auto left_op = dynamic_cast<operand_id *>(node->left_op);
@@ -107,7 +105,6 @@ vector<string> make_expression(expression_node *node, string prefix) {
 
 vector<string> make_assignment(assignment_node *node, string prefix) {
   vector<string> row;
-  cout << node->left_op->op_type() << " " << node->right_op->op_type() << endl;
   if (node->left_op->op_type() == operand_type::_id &&
       node->right_op->op_type() == operand_type::_id) {
     auto left_op = dynamic_cast<operand_id *>(node->left_op);
@@ -123,7 +120,6 @@ vector<string> make_assignment(assignment_node *node, string prefix) {
       node->right_op->op_type() == operand_type::_node) {
     auto left_op = dynamic_cast<operand_id *>(node->left_op);
     auto right_op = dynamic_cast<operand_node *>(node->right_op);
-    cout << "make_expression complex " << right_op->value->type << endl;
     if (right_op->value->type == node_type::_expression) {
       auto _row = make_expression((expression_node *)right_op->value, prefix);
       row.insert(row.end(), _row.begin(), _row.end());
